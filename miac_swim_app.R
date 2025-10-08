@@ -351,6 +351,7 @@ server <- function(input, output) {
     p <- ggplot(data_filtered, aes(x = season, y = points, color = team)) + 
       stat_summary(group = 1, color = 'darkgreen', fun = 'mean', geom = 'line', linewidth = .5) +
       stat_summary(group = 1, color = 'darkgreen', fun = 'mean', geom = 'point', size = 1.75) +
+      geom_vline(xintercept = 2.5, linetype = 'dashed') + # Pandemic timeskip
       geom_point() +
       geom_line(aes(group = team)) +
       scale_y_continuous(breaks = seq(100, 650, by = 100)) +
@@ -484,26 +485,26 @@ server <- function(input, output) {
   })
   
   output$rq1_text <- renderText({
-    "This plot gives you the top 10 and bottom 10 tapers on each team in the MIAC for the MIAC championships swim meet. A taper is a reduction in training volume and intensity prior to important an important swim meets to optimize swimming speed prior to an important event. Good tapers can shave seconds off a swimmer's average race times"
+    "This plot gives you the top 10 and bottom 10 tapers on each team in the MIAC for the MIAC championships swim meet. A taper is a reduction in training volume and intensity prior to important an important swim meets to optimize swimming speed prior to an important event. Good tapers can shave seconds off a swimmer's average race times."
   })
   
   output$rq2_text <- renderText({
-    "This tab displays a faceted scattterplot to look at the impact of 5th year's on swim rosters in seasons where there were 5th years. After COVID-19, many swimmers were given the opportunity to swim a 5th year and this plot aims to look at the impact of swimming an extra season had on an individuals scoring."
+    "This tab displays a scatterplot which visualizes the impact of fifth years on swim rosters in seasons where there were fifth years. After the COVID-19 Pandemic, student-athletes in the NCAA were given the opportunity to participate in their sport for an extra year. This option ended with the graduating class of 2024 (whose last year of eligibility would then be 2025, should they take the extra year.) This plot aims to visualize the impact of swimming an extra season had on an individual's scoring."
   })
   
   output$rq3_text <- renderText({
-    "This tab displays faceted boxplots to show the impact of COVID-19 on swimmers. We took swimmers who swam at least one season prior to the 2019-2020 COVID season and swam at least one season after the 2019-2020 COVID season. We have displayed the difference between the average points scored by each team before and after COVID."
+    "This tab displays faceted boxplots to show the impact of the COVID-19 Pandemic on MIAC swimmers' performances. We took swimmers who swam at least one season prior to the 2019-2020 'Covid Season' and swam at least one season afterwards. We have displayed the difference between the average points scored by each team before and after this Covid Season."
   })
   
   output$rq4_text <- renderText({
-    "This tab displays a team's power points over time for both men's and women's teams. We made this plot to look at which schools have been the most dominant in the MIAC over time. And also to look at whether or not men's and women's team often improve together. Extra Note: The dark green line on Power Points Analysis represents the average power points in each season."
+    "This tab displays a team's power points over time for both men's and women's teams. We made this plot to look at which schools have been the most dominant in the MIAC over time. The second plot gives an impression at whether or not men's and women's teams often together at one school. A positive score on the second plot indicates that the school's men's team improved more or lost fewer team power points. A negative score indicates the same, but in favor of the school's women's team. Extra Note: The dark green line on Power Points Analysis represents the average power points in each season."
   })
   
   output$rq5_text <- renderText({
-    "This tab allows you to generate a random team of 15 swimmers who are pulled randomly from all the swimmers in the MIAC in the season you specify. It shows where your team would have placed within the MIAC. We only bootstrap a single time to allow for more variation(Hopefully you can beat Gustavus at least once!)"
+    "This tab allows you to generate a random team of 15 swimmers who are pulled randomly from all swimmers in the MIAC in the season you specify. It shows where your team would have placed within the MIAC. We only bootstrap a single time to allow for more variation (Hopefully you can beat Gustavus at least once!)"
   })
   output$rq6_text <- renderText({
-    "In this tab we use temporal data to display which events the best swimmers on each team swim, and how their time drops compare to each other in their shared events."
+    "In this tab we use temporal data to display which events the best swimmers on each team swim, and how their time drops from season best times at the conference meet compare to each other in their shared events."
   })
 }
 
