@@ -1,0 +1,111 @@
+---
+title: "research_four"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+4. What schools have been the strongest over the years? Do their men's and women's teams improve together?
+
+```{r setup}
+library(tidyverse)
+library(readr)
+library(ggthemes)
+library(showtext)
+library(plotly)
+library(readr)
+library(stringr)
+library(dplyr)
+
+miac_swim <- c('Carleton' = "#2F5392",
+               'Concordia-Moorhead' = "#630E37",
+               'Gustavus' = "#F0C100", 
+               'Hamline' = "#8A8D8C", # Customized color palette
+               'Macalester' = "#E14826",
+               "Saint John's/Saint Ben's" = '#BD0F34', 
+               "Saint Kate's" = '#491A6A', 
+               'Saint Olaf' = '#231F20')
+```
+
+```{r}
+# Championship power points over the years
+data1 <- read_csv('data/miac_chpoints.csv')
+
+# Convert "2017-2018" to "17-18"
+data1 <- data1 
+
+
+teampoints_ts <- ggplot(data1, aes(x = season, y = points)) + 
+  stat_summary(group = 1, color = 'darkgreen', fun = 'mean', geom = 'line', linewidth = .5) +
+  stat_summary(group = 1, color = 'darkgreen', fun = 'mean', geom = 'point', size = 1.75) +
+  geom_point(aes(color = team)) + 
+  geom_line(aes(color = team, group = team)) +
+  scale_y_continuous(breaks = seq(100, 650, by = 100)) +
+  scale_color_manual(values = miac_swim) + 
+  facet_wrap(~ gender) +
+  theme_clean() +
+  labs(
+    x = 'Season', y = 'Power Points',
+    color = 'Team'
+  )
+  
+ggplotly(teampoints_ts, tooltip = c('team', 'points'))
+```
+
+```{r}
+# Team combined change plot
+data2 <- data1 %>%
+  filter(team != 'Concordia-Moorhead' |  # Removing schools with only women's teams
+         team != "Saint Kate's") %>% 
+  arrange(team, season) %>%
+  group_by(team, gender) %>%
+  mutate(change_points = points - lag(points)) %>%
+  ungroup()
+
+mens_changes <- data2 %>% filter(gender == 'Male')
+womens_changes <- data2 %>% filter(gender == 'Female')
+
+data2 <- mens_changes %>%
+  select(season, team, change_points) %>%
+  rename(men_change = change_points) %>%
+  left_join(womens_changes %>%
+              select(season, team, change_points) %>%
+              rename(women_change = change_points), 
+            by = c("season", "team")) %>%
+  mutate(change_difference = men_change - women_change) %>% 
+  filter(!is.na(men_change))   # Only need filter by one variable
+
+data2$season <- factor(data2$season, levels = c('2018-2019', '2019-2020',
+                                                '2021-2022', '2022-2023',
+                                                '2023-2024', '2024-2025'))
+
+teampoints_ts2 <- ggplot(data2, aes(x = season, y = change_difference)) +
+  geom_point(aes(color = team)) +
+  geom_line(aes(group = team, color = team)) + 
+  geom_hline(yintercept = 0, linetype = 'dashed') +
+  geom_vline(xintercept = 2.5, linetype = 'dashed') + # vline to represent the pandemic timeskip
+  scale_color_manual(values = miac_swim) +
+  theme_clean() + 
+  labs(
+    x = 'Season', y = "Relative Power Points Change Between Men's/Women's Teams",
+    color = 'Team'
+  )
+
+ggplotly(teampoints_ts2, tooltip = c('team', 'change_difference'))
+```
+
+# Takeaways
+
+1. A few teams jumped up or down following the pandemic
+  + Mac men up, Hamline men DOWN 
+2. Mac women is the only team that across the span of our interest ONLY increased in championship points
+3. Gac men basically untouchable
+  + Hamline men too but for different reasons skull emoji
+4. When women's teams power points increase more then men's, it tends to be at a much greater rate.
+5. Gustavus teams, when compared to each other, change at the most consistent rate
+
+# Interactivity ideas
+
+- Right now the first plot has to be faceted by gender or else it gets all fucky. That won't be a problem when we include reactive code to choose either gender (I don't think we'll be able to do a combined one here, re: it gets fucky)
+- Checkboxes! we're gonna want to be able to exclude certain teams so that we can a. see the individual teams better and b. so we can observe how these teams affect the average points in the conference (the green line)
+- Honestly the second plot might just be fine as is with the plotly integration (that the first one also has)

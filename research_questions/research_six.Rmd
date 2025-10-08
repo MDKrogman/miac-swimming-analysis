@@ -1,0 +1,123 @@
+---
+title: "research_six"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+6. What events do the best swimmers on each team swim? How do their time drops compare to each other in their shared events
+  + This is where we get that temporal data we needed
+  
+```{r setup}
+library(tidyverse)
+library(readr)
+library(ggthemes)
+library(showtext)
+library(plotly)
+
+miac_swim <- c('Carleton' = "#2F5392",
+               'Concordia-Moorhead' = "#630E37",
+               'Gustavus' = "#F0C100", 
+               'Hamline' = "#8A8D8C", # Customized color palette
+               'Macalester' = "#E14826",
+               "Saint John's/Saint Ben's" = '#BD0F34', 
+               "Saint Kate's" = '#491A6A', 
+               'Saint Olaf' = '#231F20')
+```
+  
+```{r}
+# This should work just change the 'mkrog' to whatgever it says for you at that point in the path
+miac_timedrops <- read_csv("data/miac_timedrops.csv")
+```
+
+```{r}
+# Unfortunately this won't work with lubridate so I'm going to have to fix it manually
+
+convert_to_seconds <- function(time){
+  if (str_detect(time, ':') == TRUE){
+    mmsshh <- strsplit(time, split = '[:.]')[[1]]
+    minutes <- as.numeric(mmsshh[1])  
+    seconds <- as.numeric(mmsshh[2])  
+    hundredths <- as.numeric(mmsshh[3])  
+    total_seconds <- minutes * 60 + seconds + hundredths / 100
+  } else{
+    mmsshh <- strsplit(time, split = '\\.')[[1]]  
+    seconds <- as.numeric(mmsshh[1])  
+    hundredths <- as.numeric(mmsshh[2])  
+    
+    total_seconds <- seconds + hundredths / 100
+  }
+}
+
+miac_timedrops$times <- map(miac_timedrops$times, convert_to_seconds)
+miac_timedrops$times2 <- map(miac_timedrops$times2, convert_to_seconds)
+
+miac_timedrops <- miac_timedrops %>% 
+  mutate(
+    time_drop = as.numeric(times2) - as.numeric(times)
+  )
+
+miac_timedrops$gender <- recode(miac_timedrops$gender,
+                                'female' = 'Female')
+```
+
+```{r}
+# Events col chart
+# We want to see how many people specialize in each event, 
+# of this sample of the top individuals on teach men's/women's team
+
+event_col <- miac_timedrops %>% 
+               group_by(team, events) %>% 
+               summarize(
+                count = n()
+                  ) %>% 
+               ggplot(aes(x = events, y = count)) + 
+               geom_col(aes(fill = team), color = 'black') +
+               scale_fill_manual(values = miac_swim) + 
+               theme_clean() + 
+                 labs(
+                   x = 'Event', y = 'Frequency',
+                   fill = 'Team'
+                   )
+ggplotly(event_col, tooltip = c('team', 'count'))
+
+# Timedrops scatterplot
+# The scale will look better when we can apply a dropdown box to it
+# and look at one event at a time, and we'll have at least three observations per event
+
+timedrops_sp <- ggplot(miac_timedrops, aes(x = team, y = time_drop)) + 
+                  geom_jitter(width = .3, aes(color = team)) +
+                  geom_hline(yintercept = 0, linetype = 'dashed')  +
+                  scale_y_reverse() +
+                  scale_color_manual(values = miac_swim) +
+                  theme_clean() +
+                  theme(
+                    legend.position = 'none'
+                  ) + 
+                  labs(
+                    x = 'Team', y = 'Time Drop at MIACs (seconds)'
+                  )
+
+ggplotly(timedrops_sp, tooltip = 'time_drop')
+
+# Somehow two whole ass people gained/dropped exactly 0 seconds in all of their 
+# individual events at MIACs. I swear this wasn't data entry error.
+# I double checked the URLs I scraped
+# and the numbers came from different URLs so this was not erroneous. 
+
+# Also remember we're gonna have a dropdown box for the event
+# so it'll look a lot less insane when it's actually in the app
+```
+
+# Takeaways
+1. Carleton needs to get some really good sprinters like really bad
+2. Saint Olaf has very good variety, they're the only team that has a swimmer in every individual event (all are represented, before splitting men's and women's team)
+3. It's hard to glean anything from the scatterplot before we add the interactivity (namely the dropdown event selector)
+  + We don't (really) need to add an option to split by gender here, as it seems like the potential for big drops is kinda the same so we don't really need to split. Might be nice to explain that though.
+  + Steph popped off in all her races though (all three events in the top ten time drops ooh aah)
+4. Munkhbat choked hard in the 200 IM lmao
+
+# Interactivity ideas
+
+- plotly integration in the column chart is good, but we should also be able to select certain teams, maybe also just choose one gender (these could both be checkboxes)
+- Like I said in the comments under `timedrops_sp`, we don't really need to split gender on that plotly because it seems like everyone has the same capacity for time drop regardless of gender (mostly). It'll just be a dropdown box to choose a single event, and then that'll be reactive obv. You know how it goes. 

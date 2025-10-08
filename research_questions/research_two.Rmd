@@ -1,0 +1,69 @@
+---
+title: "research_two"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+2. Due to the COVID-19 Pandemic, NCAA athletes were allowed an extra year of eligibility to make up for the season they missed. The last of these swimmers graduate this year. How impactful were they on their team's overall standing?
+
+```{r setup}
+library(tidyverse)
+library(readr)
+library(ggthemes)
+library(showtext)
+library(plotly)
+
+miac_swim <- c('Carleton' = "#2F5392",
+               'Concordia-Moorhead' = "#630E37",
+               'Gustavus' = "#F0C100", 
+               'Hamline' = "#8A8D8C", # Customized color palette
+               'Macalester' = "#E14826",
+               "Saint John's/Saint Ben's" = '#BD0F34', 
+               "Saint Kate's" = '#491A6A', 
+               'Saint Olaf' = '#231F20')
+
+font_add_google('Alegreya Sans')  # Special font :)
+showtext_auto()
+```
+
+```{r}
+data <- read_csv('data/full_miac_points.csv')
+
+data$team <- recode(data$team,
+                    'SJU/CSB' = "Saint John's/Saint Ben's",
+                    "Saint. Kate's" = "Saint Kate's",
+                    "St. Kate's" = "Saint Kate's",
+                    'St. Olaf' = 'Saint Olaf')
+```
+
+```{r}
+# Faceted scatterplot (this will not be faceted in final, it'll be interactive)
+data$class_yr <- fct_relevel(data$class_yr, 'FR', 'SO', 'JR', 'SR', '5Y')
+
+fifthyr_plot <- data %>% 
+                  filter(season == '2021-2022' |
+                           season == '2022-2023' |
+                           season == '2023-2024' |
+                           season == '2024-2025') %>%
+                  ggplot(aes(x = class_yr, y = points)) +
+                  geom_jitter(width = .35, height = .35, alpha = .75, aes(color = team)) +
+                  scale_color_manual(values = miac_swim) +
+                  theme_clean() +
+                  labs(
+                    x = 'Class Year', y = 'Power Points',
+                    color = 'Team'
+                  ) 
+ggplotly(fifthyr_plot, tooltip = c('points', 'team'))
+```
+
+# Takeaways
+
+1. Most of the time, fifth years come from the upper half of all swimmers in their respective years
+  + The exception to this is the 2023-2024 season, where two fifth-years are not in this upper level
+2. Teams that have historically done better produced more fifth-years (Saint Kate's, Gustavus)
+
+# Interactivity ideas
+
+- Have the ability to choose a year. We won't gain much from laying all four of our seasons on top of each other, so it should be a dropdown box (2021-2022 up to 2024-2025)
+- ggplotly stuff (I already did that lol) (just remember to do renderPlotly instead of renderPlot in the shiny code, that got me REALLY bad on portfolio four)

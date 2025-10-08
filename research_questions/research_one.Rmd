@@ -1,0 +1,116 @@
+---
+title: "research_one"
+output: html_document
+---
+
+
+1. What teams had the best "taper"(Reduction in training volume and intensity prior to important an important swim meets to optimize swimming speed) into the conference meet in the 2024-2025 season? Good "tapers" can shave seconds off a swimmer's average race times.
+
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(ggthemes)
+library(dplyr)
+library(lubridate)
+library(readr)
+library(ggplot2)
+library(plotly)
+library(scales)
+```
+
+```{r}
+miac_swim <- c('Carleton' = "#2F5392",
+               'Concordia-Moorhead' = "#630E37",
+               'Gustavus' = "#F0C100", 
+               'Hamline' = "#8A8D8C", # Customized color palette
+               'Macalester' = "#E14826",
+               "Saint John's/Saint Ben's" = '#BD0F34', 
+               "Saint Kate's" = '#491A6A', 
+               'Saint Olaf' = '#231F20')
+```
+
+
+```{r, message = FALSE}
+pre <- read_csv('../data/miac_points_2425PREMIAC.csv')
+pre <- pre %>%
+  mutate(points = ifelse(points == "–", NA, points)) %>% 
+  mutate(points = as.double(points))
+
+
+pre$team <- recode(pre$team,
+                    'SJU/CSB' = "Saint John's/Saint Ben's",
+                    "Saint. Kate's" = "Saint Kate's",
+                    "St. Kate's" = "Saint Kate's",
+                    'St. Olaf' = 'Saint Olaf')
+```
+
+```{r, message = FALSE}
+post <- read_csv('../data/miac_points_2425_2.csv')
+post <- post %>%
+  mutate(points = ifelse(points == "–", NA, points)) %>% 
+  mutate(points = as.double(points))
+
+post$team <- recode(post$team,
+                    'SJU/CSB' = "Saint John's/Saint Ben's",
+                    "Saint. Kate's" = "Saint Kate's",
+                    "St. Kate's" = "Saint Kate's",
+                    'St. Olaf' = 'Saint Olaf')
+```
+
+```{r}
+combined <- left_join(pre, post, by = c("swimmer", "team", "gender", "class_yr", "season")) %>% 
+  filter(!is.na(points.x)) %>%
+  mutate(points_diff = points.y - points.x) %>%
+  filter(points_diff != 0)
+```
+
+```{r}
+# Looking at top 10 tapers for each team
+top_ten <- combined %>% 
+  group_by(team) %>% 
+  slice_max(order_by = points_diff, n = 10) %>% 
+  ungroup()
+
+ taper <- ggplot(top_ten, aes(y = reorder(swimmer, points_diff), x = points_diff, fill = team)) +
+  geom_col() +  # Creates bar chart
+  facet_wrap(~team, scales = "free_y") +  # Facet by team
+  labs(title = "Top 10 Tapers in the MIAC by Team",
+       x = "Points Post-Taper",
+       y = "Swimmer") +
+  scale_fill_manual(values = miac_swim) +
+  theme_clean() +
+  theme(legend.position = "none",
+    axis.title = element_text(face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold"),
+    axis.text.y = element_text(face = "bold", size = 5),
+    panel.grid = element_blank(),
+    axis.line.x = element_line(color = "black"))
+ 
+ ggplotly(taper, tooltip = 'points_diff')
+```
+
+```{r}
+# Plot that looks at top top tapers in the MIAC
+
+best_10 <- combined %>% 
+  slice_max(order_by = points_diff, n = 10)
+
+ggplot(best_10, aes(y = reorder(swimmer, points_diff), x = points_diff, fill = team)) +
+  geom_col(color = "black") +  # Creates bar chart
+  scale_fill_manual(values = miac_swim) +
+  labs(title = "Top 10 Tapers in the MIAC",
+       x = "Points Post-Taper",
+       y = "Swimmer") +
+  theme_clean() +
+  theme(legend.position = "none") +
+  theme(legend.position = "none",
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold"),
+    axis.text.y = element_text(face = "bold", size = 8),
+    panel.grid = element_blank(),
+    axis.line.x = element_line(color = "black"))
+```
+
+

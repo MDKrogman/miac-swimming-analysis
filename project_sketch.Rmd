@@ -1,0 +1,87 @@
+---
+title: "Final Project Sketch: Analyzing MIAC Swim Data"
+author: |
+  | Matthew Krogman and Ethan Chan
+output:
+  pdf_document: default
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, echo = FALSE, message=FALSE}
+library(tidyverse)
+library(ggthemes)
+library(readr)
+library(rvest)
+library(showtext)
+
+miac_swim <- c("#2F5392", "#630E37", "#F0C100", "#8A8D8C", # Customized color palette
+               "#E14826", '#BD0F34', '#491A6A', '#231F20')
+saveRDS(miac_swim, file = "miac_swim.rds")
+
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+
+font_add_google('Alegreya Sans')  # Special font :)
+showtext_auto()
+```
+
+# Project Introduction
+
+We look to answer some questions about MIAC teams of present and past seasons. We will track individual progress over the years as well as team improvement coming into the end of the 2024-2025 season.^[Though the conference championships took place 2 weeks ago, three swimmers (Verity Wray-Raabolle of Macalester, Brayden Slavik of Saint John's, and Braden Ripken of Gustavus) will be competing at the NCAA DIII championships in Greensboro towards the end of March. For this reason, the project will technically be "incomplete", but for our purposes it will still work very well. Best of luck to Verity, Brayden, and Braden!] Our data will span from 2018 to the current year^[There were more teams in the MIAC in previous years, namely Saint Thomas, Saint Mary's, and Augsburg. Saint Thomas and Saint Mary's left prior to 2020, and Augsburg has gone some years on/off. None of these teams will be included in the final project.], and will contain these variables:
+
+## Variable Explanation
+
+1. Name: The name of each swimmer in the conference
+2. Team: The school that the swimmer came from
+3. Gender: The gender of each swimmer, which is also a measure of who they compete with
+4. Class Year: What grade level each swimmer is from.
+5. Points: The power points that each swimmer has. This is not a measure of points scored at meets, but rather an index for how good an individual's event is, compared to records for that time. Values range from 1-1000, and when they are tied to a swimmer in general (as opposed to an individual event), they are an average of their top four events by power points.
+6. Season: The competitive season a swimmer's times are drawn from.
+
+A limitation of Swimcloud for this project is that divers are not assigned a point value, and therefore cannot be included in our visualizations and analysis. 
+
+# Example Plot
+
+Below is a violin plot of each team in the MIAC and the distribution of point values within each team. Every current swimmer is included in the plot, male and female.
+
+```{r}
+premiac2425 <- read_csv(
+  "miac_points_2425PREMIAC.csv")
+
+premiac2425 <- premiac2425 %>% 
+  filter(!is.na(points) & !is.na(class_yr))
+
+ggplot(premiac2425, aes(x = team, y = points)) +
+  geom_violin(aes(fill = team, alpha = .1), color = 'black') +
+  geom_jitter(aes(color = team), width = .2, height = .2) +
+  scale_color_manual(values = miac_swim) +
+  scale_fill_manual(values = miac_swim) + 
+  theme_minimal() +
+  theme(
+    text = element_text(size=12, family="Alegreya Sans")
+  ) +
+  guides(
+    alpha = 'none',
+    color = 'none',
+    x = 'none'
+  ) + 
+  labs(
+    x = '', y = 'Power Points',
+    fill = 'Team'
+  )
+```
+
+# Research Questions
+
+Our current research questions are as follows:
+
+1. What teams had the best taper into the conference meet in the 2024-2025 season?
+2. Due to the COVID-19 Pandemic, NCAA athletes were allowed an extra year of eligibility to make up for the season they missed. The last of these swimmers graduate this year. How impactful were they on their team's overall standing?
+3. Also regarding the pandemic, we would like to see how individuals performed in the years after the 2020-2021 season, IF they had had at least one full season before the pandemic hit, and one season after. This is the reason our data will go back to 2018 and yet exclude Saint Thomas and Saint Mary's.
+4. What schools have been the strongest over the years? Do their men's and women's teams improve together?
+5. If you were to create a random team with individuals from the MIAC, how good would they be as a whole?
+    + The idea with this one is like the shiny app we worked with in class on Week 9 Monday.  

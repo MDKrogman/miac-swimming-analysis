@@ -1,0 +1,126 @@
+name,team,gender,events,times,times2
+"Tun, Ethan",Carleton,Male,100 Back,51.30,51.90
+"Tun, Ethan",Carleton,Male,200 Breast,2:04.31,2:10.98
+"Tun, Ethan",Carleton,Male,200 IM,1:55.13,1:57.44
+"Rankin, Jackson",Carleton,Male,100 Back,55.85,55.34
+"Rankin, Jackson",Carleton,Male,100 Fly,50.59,51.29
+"Rankin, Jackson",Carleton,Male,200 Fly,1:53.43,1:57.18
+"Krogman, Matthew",Carleton,Male,500 Free,4:49.34,4:57.75
+"Krogman, Matthew",Carleton,Male,1650 Free,16:51.01,17:14.35
+"Krogman, Matthew",Carleton,Male,400 IM,4:19.83,4:25.90
+"Hou, Grace",Carleton,Female,100 Back,57.35,58.14
+"Hou, Grace",Carleton,Female,200 Back,2:08.56,2:15.69
+"Hou, Grace",Carleton,Female,100 Fly,58.53,1:00.17
+"Andersen, Chelsea",Carleton,Female,200 Free,1:58.04,1:58.96
+"Andersen, Chelsea",Carleton,Female,500 Free,5:11.08,5:16.38
+"Andersen, Chelsea",Carleton,Female,1650 Free,17:53.48,18:01.35
+"Baranov, Stephanie",Carleton,Female,500 Free,5:10.41,5:22.05
+"Baranov, Stephanie",Carleton,Female,1650 Free,18:00.32,18:37.03
+"Baranov, Stephanie",Carleton,Female,400 IM,4:41.75,4:55.61
+"Metsala, Callie",Concordia-Moorhead,Female,100 Free,53.52,55.74
+"Metsala, Callie",Concordia-Moorhead,Female,100 Fly,58.99,1:02.72
+"Metsala, Callie",Concordia-Moorhead,Female,200 IM,2:13.40,2:17.93
+"Jaeger, Hailey",Concordia-Moorhead,Female,50 Free,25.13,26.22
+"Jaeger, Hailey",Concordia-Moorhead,Female,100 Free,55.45,57.59
+"Jaeger, Hailey",Concordia-Moorhead,Female,100 Back,1:01.26,1:07.70
+"Enedy, Leah",Concordia-Moorhead,Female,100 Breast,1:09.84,1:14.86
+"Enedy, Leah",Concordia-Moorhead,Female,200 Breast,2:37.44,2:37.44
+"Enedy, Leah",Concordia-Moorhead,Female,200 IM,2:22.29,2:26.96
+"Ripken, Braden",Gustavus,Male,50 Free,20.95,21.43
+"Ripken, Braden",Gustavus,Male,100 Free,46.55,48.22
+"Ripken, Braden",Gustavus,Male,100 Breast,54.46,58.15
+"Richardson, Peyton",Gustavus,Male,100 Fly,48.52,48.69
+"Richardson, Peyton",Gustavus,Male,200 Fly,1:51.87,1:52.94
+"Richardson, Peyton",Gustavus,Male,200 IM,1:50.99,1:52.96
+"Hill, Nyden",Gustavus,Male,100 Breast,56.27,56.89
+"Hill, Nyden",Gustavus,Male,200 Breast,2:04.30,2:11.43
+"Hill, Nyden",Gustavus,Male,200 IM,1:57.43,2:00.80
+"Fackler, Geneva",Gustavus,Female,200 Free,1:53.85,1:56.26
+"Fackler, Geneva",Gustavus,Female,500 Free,5:04.74,5:12.63
+"Fackler, Geneva",Gustavus,Female,1650 Free,17:41.81,18:16.05
+"Isaacson, Marit",Gustavus,Female,100 Free,53.07,54.22
+"Isaacson, Marit",Gustavus,Female,200 IM,2:06.27,2:09.62
+"Isaacson, Marit",Gustavus,Female,400 IM,4:34.22,4:46.53
+"Siers, Katelyn",Gustavus,Female,50 Free,24.19,25.01
+"Siers, Katelyn",Gustavus,Female,100 Free,53.26,56.04
+"Siers, Katelyn",Gustavus,Female,100 Back,57.03,1:01.68
+"Purrington, Dylan",Hamline,Male,100 Breast,58.80,1:01.96
+"Purrington, Dylan",Hamline,Male,200 Breast,2:11.42,2:18.85
+"Purrington, Dylan",Hamline,Male,200 IM,2:02.13,2:07.48
+"Shaffer, Gus",Hamline,Male,100 Back,59.15,59.15
+"Shaffer, Gus",Hamline,Male,200 Back,2:06.20,2:06.20
+"Shaffer, Gus",Hamline,Male,200 IM,2:07.59,2:07.59
+"Poscher, Manny",Hamline,Male,50 Free,22.15,23.59
+"Poscher, Manny",Hamline,Male,100 Free,51.25,53.57
+"Yuttras, Sila",Hamline,Female,100 Breast,1:07.58,1:10.69
+"Yuttras, Sila",Hamline,Female,200 Breast,2:27.99,2:33.84
+"Yuttras, Sila",Hamline,Female,200 IM,2:11.69,2:15.37
+"Sorenson-Wagner, Ellsa",Hamline,Female,50 Free,26.11,27.16
+"Sorenson-Wagner, Ellsa",Hamline,Female,100 Back,1:01.98,1:04.50
+"Sorenson-Wagner, Ellsa",Hamline,Female,200 Back,2:16.23,2:22.34
+"Phillips, Nicole",Hamline,Female,50 Free,26.72,27.50
+"Phillips, Nicole",Hamline,Female,100 Free,59.26,1:00.33
+"Phillips, Nicole",Hamline,Female,100 Breast,1:13.71,1:17.07
+"Batsaikahn, Charles",Macalester,Male,100 Breast,56.47,56.96
+"Batsaikahn, Charles",Macalester,Male,200 Breast,2:09.17,2:06.52
+"Batsaikahn, Charles",Macalester,Male,200 IM,1:57.06,1:58.50
+"Moore, Tommy",Macalester,Male,100 Free,46.85,46.46
+"Moore, Tommy",Macalester,Male,100 Fly,51.12,51.05
+"Moore, Tommy",Macalester,Male,200 IM,1:55.25,2:04.46
+"St. John, Will",Macalester,Male,100 Breast,58.60,59.41
+"St. John, Will",Macalester,Male,200 Breast,2:07.77,2:08.61
+"St. John, Will",Macalester,Male,200 IM,1:59.54,2:02.85
+"Wray-Raabolle, Verity",Macalester,Female,50 Free,23.95,24.70
+"Wray-Raabolle, Verity",Macalester,Female,100 Back,55.68,58.07
+"Wray-Raabolle, Verity",Macalester,Female,200 Back,2:04.60,2:12.58
+"Uhlhonr-Thornton, Izzy",Macalester,female,100 Breast,1:04.89,1:06.95
+"Uhlhonr-Thornton, Izzy",Macalester,female,200 Breast,2:20.83,2:26.81
+"Uhlhonr-Thornton, Izzy",Macalester,female,200 IM,2:11.54,2:15.54
+"Chapon, Caroline",Macalester,Female,50 Free,24.18,24.44
+"Chapon, Caroline",Macalester,Female,100 Free,53.03,53.48
+"Chapon, Caroline",Macalester,Female,100 Fly,57.50,58.99
+"Svendsen, Emma",Saint Kate's,Female,200 Back,2:06.65,2:07.31
+"Svendsen, Emma",Saint Kate's,Female,100 Fly,57.64,59.01
+"Svendsen, Emma",Saint Kate's,Female,200 IM,2:10.29,2:09.91
+"Hochstetler, Ella",Saint Kate's,Female,50 Free,24.47,24.71
+"Hochstetler, Ella",Saint Kate's,Female,100 Free,53.60,53.87
+"Hochstetler, Ella",Saint Kate's,Female,100 Back,57.81,58.66
+"Weil, Olivia",Saint Kate's,Female,500 Free,5:08.91,5:15.58
+"Weil, Olivia",Saint Kate's,Female,100 Breast,1:06.27,1:07.79
+"Weil, Olivia",Saint Kate's,Female,200 Breast,2:22.83,2:25.53
+"Slavik, Brayden",Saint John's/Saint Ben's,Male,500 Free,4:29.49,4:34.69
+"Slavik, Brayden",Saint John's/Saint Ben's,Male,1650 Free,15:32.98,15:54.60
+"Slavik, Brayden",Saint John's/Saint Ben's,Male,400 IM,4:00.12,4:05.58
+"Larson, Carter",Saint John's/Saint Ben's,Male,100 Free,45.50,46.32
+"Larson, Carter",Saint John's/Saint Ben's,Male,200 Free,1:39.66,1:42.58
+"Larson, Carter",Saint John's/Saint Ben's,Male,500 Free,4:34.22,4:42.14
+"Reuter, Carsten",Saint John's/Saint Ben's,Male,50 Free,20.56,22.12
+"Reuter, Carsten",Saint John's/Saint Ben's,Male,100 Free,45.70,47.50
+"Reuter, Carsten",Saint John's/Saint Ben's,Male,100 Fly,52.07,52.80
+"Morris, Mary",Saint John's/Saint Ben's,Male,50 Free,24.52,25.20
+"Morris, Mary",Saint John's/Saint Ben's,Male,200 Free,1:55.26,1:56.12
+"Morris, Mary",Saint John's/Saint Ben's,Male,200 Back,2:06.31,2:06.57
+"Schlueter, Rachel",Saint John's/Saint Ben's,Female,50 Free,24.22,24.22
+"Schlueter, Rachel",Saint John's/Saint Ben's,Female,100 Free,53.64,53.64
+"Schlueter, Rachel",Saint John's/Saint Ben's,Female,100 Back,57.92,57.92
+"Canfield, Claire",Saint John's/Saint Ben's,Female,200 Back,2:07.26,2:10.41
+"Canfield, Claire",Saint John's/Saint Ben's,Female,200 IM,2:12.14,2:14.65
+"Canfield, Claire",Saint John's/Saint Ben's,Female,400 IM,4:42.73,4:45.79
+"Starcevich, Nick",Saint Olaf,Male,50 Free,20.79,21.26
+"Starcevich, Nick",Saint Olaf,Male,100 Free,45.69,47.15
+"Starcevich, Nick",Saint Olaf,Male,100 Breast,58.37,1:00.94
+"Elling, Travis",Saint Olaf,Male,200 Free,1:45.85,1:47.97
+"Elling, Travis",Saint Olaf,Male,500 Free,4:48.16,4:57.41
+"Elling, Travis",Saint Olaf,Male,1650 Free,16:59.27,17:10.07
+"Yung, Aiden",Saint Olaf,Male,200 Breast,2:07.28,2:11.04
+"Yung, Aiden",Saint Olaf,Male,200 IM,1:55.58,2:00.43
+"Yung, Aiden",Saint Olaf,Male,400 IM,4:11.76,4:20.22
+"Homee, Katie",Saint Olaf,Female,50 Free,23.92,24.63
+"Homee, Katie",Saint Olaf,Female,100 Free,52.23,54.72
+"Homee, Katie",Saint Olaf,Female,200 Free,1:54.63,1:56.10
+"Steenblock, Paige",Saint Olaf,Female,200 Fly,2:09.86,2:11.33
+"Steenblock, Paige",Saint Olaf,Female,200 IM,2:07.51,2:09.51
+"Steenblock, Paige",Saint Olaf,Female,400 IM,4:27.67,4:37.21
+"Small, Olivia",Saint Olaf,Female,100 Back,56.56,57.20
+"Small, Olivia",Saint Olaf,Female,200 Back,2:03.78,2:04.55
+"Small, Olivia",Saint Olaf,Female,100 Fly,58.85,1:00.03

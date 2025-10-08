@@ -1,0 +1,95 @@
+---
+title: "research_three"
+output: html_document
+---
+
+3. Also regarding the pandemic, we would like to see the effect of the 2020-2021, "Covid Season", on individual performance. We would only consider individuals who had swam at least one full season before and after the pandemic. This is the reason our data will go back to 2018 and yet exclude Saint Thomas and Saint Mary's.
+
+```{r}
+library(tidyverse)
+library(patchwork)
+library(ggthemes)
+library(dplyr)
+library(lubridate)
+library(readr)
+library(ggplot2)
+library(scales)
+```
+
+```{r}
+miac_swim <- c('Carleton' = "#2F5392",
+               'Concordia-Moorhead' = "#630E37",
+               'Gustavus' = "#F0C100", 
+               'Hamline' = "#8A8D8C", # Customized color palette
+               'Macalester' = "#E14826",
+               "Saint John's/Saint Ben's" = '#BD0F34', 
+               "Saint Kate's" = '#491A6A', 
+               'Saint Olaf' = '#231F20')
+```
+
+```{r, message = FALSE}
+pre_covid <- read_csv('../data/miac_points_1920.csv')
+pre_covid <- pre_covid %>%
+  mutate(points = ifelse(points == "–", NA, points)) %>% 
+  mutate(points = as.double(points))
+
+
+pre_covid$team <- recode(pre_covid$team,
+                    'SJU/CSB' = "Saint John's/Saint Ben's",
+                    "Saint. Kate's" = "Saint Kate's",
+                    "St. Kate's" = "Saint Kate's",
+                    'St. Olaf' = 'Saint Olaf')
+```
+
+```{r, message = FALSE}
+post_covid <- read_csv('../data/miac_points_2122.csv')
+post_covid <- post_covid %>%
+  mutate(points = ifelse(points == "–", NA, points)) %>% 
+  mutate(points = as.double(points))
+
+
+post_covid$team <- recode(post_covid$team,
+                    'SJU/CSB' = "Saint John's/Saint Ben's",
+                    "Saint. Kate's" = "Saint Kate's",
+                    "St. Kate's" = "Saint Kate's",
+                    'St. Olaf' = 'Saint Olaf')
+
+```
+
+```{r}
+covid_swim <- left_join(pre_covid, post_covid, by = c("swimmer", "team", "gender")) %>% filter(!is.na(points.x)) %>% filter(!is.na(points.y))
+```
+
+```{r}
+total <- bind_rows(pre_covid, post_covid) %>% semi_join(covid_swim, by = "swimmer")
+```
+
+```{r}
+#Boxplot for total points before and after
+ggplot(total, aes(x = points, y = season, fill = season))+
+  geom_boxplot() +
+  theme_clean() +
+  labs(title = "Impact of COVID on Swimmer Power Points",
+       y = "Season",
+       x = "Power Points") +
+  theme(legend.position = "none")
+```
+
+```{r}
+#Boxplot for total points before and after
+ggplot(total, aes(x = points, y = season, fill = season))+
+  geom_boxplot() +
+  theme_clean() +
+  facet_wrap(~team) +
+  labs(title = "Impact of COVID on Team Power Points",
+       y = "Season",
+       x = "Power Points") +
+  theme(legend.position = "none",
+    axis.title = element_text(face = "bold"),
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold"),
+    axis.text.y = element_text(face = "bold", size = 5),
+    panel.grid = element_blank(),
+    axis.line.x = element_line(color = "black"))
+```
+
